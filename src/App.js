@@ -11,7 +11,7 @@ const App = () => {
   const [inputVal, setInputVal] = useState("");
 
   const handleSearch = (e) => {
-    e.preventDevault();
+    e.preventDefault();
     setSearch(inputVal);
     setInputVal("");
   };
@@ -26,21 +26,26 @@ const App = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetch(
-      `https://pixabay.com/api/?key=${API_KEY}&q=${search}&image_type=photo&per_page=9&page=${currentPage}&pretty=true`
-    )
-      .then((res) => res.json())
-      .then((data) => setImages(data.hits));
+    requestImages();
   }, [search, currentPage]);
+
+  async function requestImages() {
+    const res = await fetch(
+      `https://pixabay.com/api/?key=${API_KEY}&q=${search}&image_type=photo&per_page=9&page=${currentPage}&pretty=true`
+    );
+    const json = await res.json();
+    setImages(json.hits);
+  }
 
   return (
     <div className="App">
-      <Hero />
-      images={images}
-      inputVal={inputVal}
-      setInputVal={setInputVal}
-      handleSearch={handleSearch}
-      newImages = {newImages}
+      <Hero
+        images={images}
+        inputVal={inputVal}
+        setInputVal={setInputVal}
+        handleSearch={handleSearch}
+        newImages={newImages}
+      />
     </div>
   );
 };

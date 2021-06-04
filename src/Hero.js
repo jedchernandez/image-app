@@ -1,9 +1,8 @@
 import Container from "./Container";
 import Search from "./Search";
-import Card from "./Container";
+import Card from "./Card";
 
-const Hero = (props) => {
-  const { inputVal, setInputVal, handleSearch, images, newImages } = props;
+const Hero = ({ inputVal, setInputVal, handleSearch, images, newImages }) => {
   return (
     <section className="hero">
       <Search
